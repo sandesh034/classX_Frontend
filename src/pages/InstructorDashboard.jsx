@@ -4,6 +4,7 @@ import Resources from '../components/Resources'
 import Calendar from '../components/Calender'
 
 
+
 const InstructorDashboard = () => {
     const [activeTab, setActiveTab] = useState('routine')
 
@@ -433,7 +434,7 @@ const InstructorDashboard = () => {
                     </div>
                 </aside>
 
-                <main class="p-4 md:ml-64 h-auto pt-20">
+                <main class="p-4 md:ml-64 h-auto min-h-screen pt-20">
                     {activeTab === 'routine' && (
                         <div>
                             <Calendar />
@@ -461,6 +462,7 @@ const InstructorDashboard = () => {
 
                 </main>
             </div>
+
         </>
     )
 }
