@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import Discussion from '../components/Discussion'
 import Resources from '../components/Resources'
+import Calendar from '../components/Calender'
 
 
 const InstructorDashboard = () => {
@@ -432,10 +433,10 @@ const InstructorDashboard = () => {
                     </div>
                 </aside>
 
-                <main class="p-4 md:ml-64 h-screen pt-20">
+                <main class="p-4 md:ml-64 h-auto pt-20">
                     {activeTab === 'routine' && (
                         <div>
-                            Routine Page
+                            <Calendar />
                         </div>
                     )}
 

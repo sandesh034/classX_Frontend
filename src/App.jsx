@@ -4,7 +4,7 @@ import { ToastContainer } from 'react-toastify'
 import Registration from './components/Registration'
 import Login from './components/Login'
 import InstructorDashboard from './pages/InstructorDashboard'
-// import Calender from './components/Calender'
+import VideoCalling from './components/VideoCalling'
 import 'react-toastify/dist/ReactToastify.css';
 
 const App = () => {
@@ -30,7 +30,7 @@ const App = () => {
         <Route path='/register' element={<Registration />} />
         <Route path='/login' element={<Login />} />
         <Route path='/instructor-dashboard' element={<InstructorDashboard />} />
-        {/* <Route path='/calender' element={<Calender />} /> */}
+        <Route path='/video-calling' element={<VideoCalling />} />
       </Routes>
       <ToastContainer />
     </BrowserRouter>
