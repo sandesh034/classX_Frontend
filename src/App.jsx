@@ -5,6 +5,7 @@ import Registration from './components/Registration'
 import Login from './components/Login'
 import InstructorDashboard from './pages/InstructorDashboard'
 import VideoCalling from './components/VideoCalling'
+import AssignmentTable from './components/AssignmentTable'
 import 'react-toastify/dist/ReactToastify.css';
 
 const App = () => {
@@ -31,6 +32,7 @@ const App = () => {
         <Route path='/login' element={<Login />} />
         <Route path='/instructor-dashboard' element={<InstructorDashboard />} />
         <Route path='/video-calling' element={<VideoCalling />} />
+        <Route path='/assignment-table' element={<AssignmentTable />} />
       </Routes>
       <ToastContainer />
     </BrowserRouter>

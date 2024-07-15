@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import Discussion from '../components/Discussion'
 import Resources from '../components/Resources'
 import Calendar from '../components/Calender'
+import Assignment from '../components/Assignment'
 
 
 
@@ -443,7 +444,7 @@ const InstructorDashboard = () => {
 
                     {activeTab === 'assignment' && (
                         <div>
-                            Assignment Page
+                            <Assignment />
                         </div>
                     )}
 
