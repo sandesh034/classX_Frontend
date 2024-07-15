@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { toast } from 'react-toastify';
 
 const Assignment = () => {
@@ -13,6 +13,20 @@ const Assignment = () => {
         pass_marks: null,
         attachment: null
     })
+
+    const [assignments, setAssignments] = useState([{
+        title: null,
+        description: null,
+        deadline_date: null,
+        deadline_time: null,
+        full_marks: null,
+        pass_marks: null,
+        attachment: null,
+        instructor_name: null,
+        instructor_image: null,
+        total_submissions: null,
+    }]);
+
 
     const handleCloseModal = () => {
         setIsModalOpen(false);
@@ -53,14 +67,15 @@ const Assignment = () => {
             })
             const data = await response.json();
             if (response.ok) {
-                console.log('Assignment uploaded successfully')
+                // console.log('Assignment uploaded successfully')
                 toast.success(data.message);
                 setLoading(false);
                 setIsModalOpen(false);
+                fetchAssignment();
             }
 
             else {
-                console.log('Assignment upload failed')
+                // console.log('Assignment upload failed')
                 toast.error(data.message);
                 setLoading(false);
                 setIsModalOpen(false);
@@ -71,6 +86,33 @@ const Assignment = () => {
 
         }
     }
+
+    const fetchAssignment = async () => {
+        try {
+            const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/course/assignment/get/dfa7a586-8ed7-4039-8265-dc14d469e7f5`, {
+                method: 'GET',
+                credentials: 'include'
+            })
+            const data = await response.json();
+            if (response.ok) {
+                // console.log('Assignment fetched successfully')
+                setAssignments(data.data)
+            }
+
+            else {
+                toast.error(data.message);
+            }
+
+        } catch (error) {
+            console.log(error)
+
+        }
+    }
+
+    useEffect(() => {
+        fetchAssignment();
+    }, [])
+
 
     return (
         <>
@@ -89,89 +131,124 @@ const Assignment = () => {
             </div>
 
             <div className='grid grid-cols-1 md:grid-cols-2  gap-4'>
-                <div className="block max-w-xl p-1 bg-white border border-gray-200 rounded-lg shadow  dark:bg-gray-800 dark:border-gray-700 m-2">
+                {
+                    assignments && assignments.map((assignment) => {
+                        { console.log(assignment.deadline_date) }
+                        return (
+                            <>
+                                <div className="block max-w-xl p-1 bg-white border border-gray-200 rounded-lg shadow  dark:bg-gray-800 dark:border-gray-700 m-2">
 
-                    <div class="flex md:flex-row flex-row items-center bg-white  md:max-w-xl  dark:border-gray-700 dark:bg-gray-800 mb-1 ">
-                        <svg class="w-40 h-40 text-gray-500 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
-                            <path fill-rule="evenodd" d="M18 3a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2h-1V9a4 4 0 0 0-4-4h-3a1.99 1.99 0 0 0-1 .267V5a2 2 0 0 1 2-2h7Z" clip-rule="evenodd" />
-                            <path fill-rule="evenodd" d="M8 7.054V11H4.2a2 2 0 0 1 .281-.432l2.46-2.87A2 2 0 0 1 8 7.054ZM10 7v4a2 2 0 0 1-2 2H4v6a2 2 0 0 0 2 2h7a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3Z" clip-rule="evenodd" />
-                        </svg>
-                        <div class="flex flex-col justify-between p-4 leading-normal">
-                            <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Noteworthy technology acquisitions</h5>
-                            <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">Here are the biggest enterprise technology acquisitions of 2021 so far, in reverse chronological order.</p>
-                            <div class="flex flex-col md:flex-row gap-6 mb-3">
+                                    <div class="flex md:flex-row flex-row items-center bg-white  md:max-w-xl  dark:border-gray-700 dark:bg-gray-800 mb-1 ">
+                                        <svg class="min-w-24 min-h-24  text-gray-500 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+                                            <path fill-rule="evenodd" d="M18 3a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2h-1V9a4 4 0 0 0-4-4h-3a1.99 1.99 0 0 0-1 .267V5a2 2 0 0 1 2-2h7Z" clip-rule="evenodd" />
+                                            <path fill-rule="evenodd" d="M8 7.054V11H4.2a2 2 0 0 1 .281-.432l2.46-2.87A2 2 0 0 1 8 7.054ZM10 7v4a2 2 0 0 1-2 2H4v6a2 2 0 0 0 2 2h7a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3Z" clip-rule="evenodd" />
+                                        </svg>
+                                        <div class="flex flex-col justify-between p-4 leading-normal">
+                                            <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+                                                {assignment.title}
+                                            </h5>
+                                            <p class="mb-3 font-normal text-gray-700 dark:text-gray-400 line-clamp-2">{assignment.description}</p>
+                                            <div class="flex flex-col md:flex-row gap-6 mb-3">
 
-                                <div class="flex items-center gap-4">
-                                    <img class="w-10 h-10 rounded-full" src="/avatar.png" alt="" />
-                                    <div class=" text-gray-900 dark:text-white" >
-                                        Rajad Shakya
+                                                <div class="flex items-center gap-4">
+                                                    <img class="w-10 h-10 rounded-full" src="/avatar.png" alt="" />
+                                                    <div class=" text-gray-900 dark:text-white" >
+                                                        {assignment.instructor_name}
+                                                    </div>
+                                                </div>
+
+                                                <div class="flex items-center text-gray-900 rounded-lg dark:text-white  group">
+                                                    <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                                                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 10h16m-8-3V4M7 7V4m10 3V4M5 20h14a1 1 0 0 0 1-1V7a1 1 0 0 0-1-1H5a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1Zm3-7h.01v.01H8V13Zm4 0h.01v.01H12V13Zm4 0h.01v.01H16V13Zm-8 4h.01v.01H8V17Zm4 0h.01v.01H12V17Zm4 0h.01v.01H16V17Z" />
+                                                    </svg>
+                                                    <span class="ms-3">{new Date(assignment.deadline_date).toLocaleDateString()}</span>
+                                                </div>
+
+                                                <div class="flex items-center text-gray-900 rounded-lg dark:text-white group">
+                                                    <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                                                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                                                    </svg>
+
+                                                    <span class="ms-3">{new Date('1970-01-01T' + assignment.deadline_time + 'Z').toLocaleTimeString('en-US', { hour12: true, timeZone: 'UTC' })}</span>
+                                                </div>
+
+
+
+                                            </div>
+
+                                            <div class="flex flex-col justify-between md:flex-row gap-6">
+
+                                                {/* {new Date() <= new Date(`${assignment.deadline_date.split('T')[0]}T${assignment.deadline_time}Z`) ?
+                                                    <p>Status : <span className="bg-green-100 text-green-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded-full dark:bg-green-900 dark:text-green-300">Open</span></p>
+                                                    :
+                                                    <p> Status : <span class="bg-red-100 text-red-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded-full dark:bg-red-900 dark:text-red-300">Expired</span></p>
+                                                } */}
+
+
+                                                <button type="button" class="text-gray-900 bg-white hover:bg-gray-100 border border-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-100 font-medium rounded-lg text-sm px-5 py-0.5 text-center inline-flex items-center dark:focus:ring-gray-600 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:bg-gray-700 me-2" onClick={() => window.open(assignment.attachment, "_blank").focus()}>
+                                                    <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                                                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 15v2a3 3 0 0 0 3 3h10a3 3 0 0 0 3-3v-2m-8 1V4m0 12-4-4m4 4 4-4" />
+                                                    </svg>
+                                                    Download Resource
+                                                </button>
+
+                                            </div>
+
+                                        </div>
+
+
                                     </div>
-                                </div>
+                                    <hr></hr>
 
-                                <div class="flex items-center text-gray-900 rounded-lg dark:text-white  group">
-                                    <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-                                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 10h16m-8-3V4M7 7V4m10 3V4M5 20h14a1 1 0 0 0 1-1V7a1 1 0 0 0-1-1H5a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1Zm3-7h.01v.01H8V13Zm4 0h.01v.01H12V13Zm4 0h.01v.01H16V13Zm-8 4h.01v.01H8V17Zm4 0h.01v.01H12V17Zm4 0h.01v.01H16V17Z" />
-                                    </svg>
-                                    <span class="ms-3">{new Date().toLocaleDateString()}</span>
-                                </div>
+                                    <div class="flex gap-5 md:flex-row md:max-w-xl justify-between my-2">
+                                        <div class="flex flex-col items-center justify-center  px-3">
+                                            <dt class="mb-1 text-sm font-bold">Full Marks</dt>
+                                            <dd class="text-gray-500 dark:text-gray-400">{assignment.full_marks}</dd>
+                                        </div>
 
-                                <div class="flex items-center text-gray-900 rounded-lg dark:text-white group">
-                                    <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-                                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
-                                    </svg>
+                                        <div class="flex flex-col items-center justify-center  px-3">
+                                            <dt class="mb-1 text-sm font-bold">Pass Marks</dt>
+                                            <dd class="text-gray-500 dark:text-gray-400">{assignment.pass_marks}</dd>
+                                        </div>
 
-                                    <span class="ms-3">{new Date().toLocaleTimeString()}</span>
-                                </div>
+                                        <div class="flex flex-col items-center justify-center  px-3">
+                                            <dt class="mb-1 text-sm font-bold">Submissions</dt>
+                                            <dd class="text-gray-500 dark:text-gray-400">{assignment.total_submissions}</dd>
+                                        </div>
+                                    </div>
+                                    <hr></hr>
+                                    <div className='flex items-center justify-center cursor-pointer'>
+                                        <div type="button" class="text-center text-blue-700 hover:text-blue-800 font-medium rounded-lg text-md  py-2.5  inline-flex items-center dark:text-blue-600 dark:hover:text-blue-70">
+                                            View Details
+                                            <svg class="rtl:rotate-180 w-4 h-4 ms-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
+                                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9" />
+                                            </svg>
+                                        </div>
+                                    </div>
 
+                                </div >
+                            </>
+                        )
 
-
-                            </div>
-
-                            <div class="flex flex-col justify-between md:flex-row gap-6">
-                                <p>Status : <span class="bg-green-100 text-green-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded-full dark:bg-green-900 dark:text-green-300">Open</span></p>
-                                <button type="button" class="text-gray-900 bg-white hover:bg-gray-100 border border-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-100 font-medium rounded-lg text-sm px-5 py-0.5 text-center inline-flex items-center dark:focus:ring-gray-600 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:bg-gray-700 me-2">
-                                    <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-                                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 15v2a3 3 0 0 0 3 3h10a3 3 0 0 0 3-3v-2m-8 1V4m0 12-4-4m4 4 4-4" />
-                                    </svg>
-                                    Download Resource
-                                </button>
-
-                            </div>
-
-                        </div>
-
-
-                    </div>
-                    <hr></hr>
-
-                    <div class="flex gap-5 md:flex-row md:max-w-xl justify-between my-2">
-                        <div class="flex flex-col items-center justify-center  px-3">
-                            <dt class="mb-1 text-sm font-bold">Full Marks</dt>
-                            <dd class="text-gray-500 dark:text-gray-400">100</dd>
-                        </div>
-
-                        <div class="flex flex-col items-center justify-center  px-3">
-                            <dt class="mb-1 text-sm font-bold">Pass Marks</dt>
-                            <dd class="text-gray-500 dark:text-gray-400">40</dd>
-                        </div>
-
-                        <div class="flex flex-col items-center justify-center  px-3">
-                            <dt class="mb-1 text-sm font-bold">Submissions</dt>
-                            <dd class="text-gray-500 dark:text-gray-400">5</dd>
-                        </div>
-                    </div>
-                    <hr></hr>
-                    <div className='flex items-center justify-center'>
-                        <div type="button" class="text-center text-blue-700 hover:text-blue-800 font-medium rounded-lg text-md  py-2.5  inline-flex items-center dark:text-blue-600 dark:hover:text-blue-70">
-                            View Submission
-                            <svg class="rtl:rotate-180 w-4 h-4 ms-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
-                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9" />
-                            </svg>
-                        </div>
-                    </div>
-
-                </div >
+                    }
+                    )
+                }
             </div>
+            {
+                assignments == null && (
+                    <>
+                        <div className=' flex  flex-col items-center justify-center'>
+                            <svg class="w-40 h-40 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                                <path d="M10.5 15L13.5 12M13.5 15L10.5 12" stroke="#1C274C" stroke-width="1.5" stroke-linecap="round"></path> <path d="M22 11.7979C22 9.16554 22 7.84935 21.2305 6.99383C21.1598 6.91514 21.0849 6.84024 21.0062 6.76946C20.1506 6 18.8345 6 16.2021 6H15.8284C14.6747 6 14.0979 6 13.5604 5.84678C13.2651 5.7626 12.9804 5.64471 12.7121 5.49543C12.2237 5.22367 11.8158 4.81578 11 4L10.4497 3.44975C10.1763 3.17633 10.0396 3.03961 9.89594 2.92051C9.27652 2.40704 8.51665 2.09229 7.71557 2.01738C7.52976 2 7.33642 2 6.94975 2C6.06722 2 5.62595 2 5.25839 2.06935C3.64031 2.37464 2.37464 3.64031 2.06935 5.25839C2 5.62595 2 6.06722 2 6.94975M21.9913 16C21.9554 18.4796 21.7715 19.8853 20.8284 20.8284C19.6569 22 17.7712 22 14 22H10C6.22876 22 4.34315 22 3.17157 20.8284C2 19.6569 2 17.7712 2 14V11" stroke="#1C274C" stroke-width="1.5" stroke-linecap="round"></path>
+                            </svg>
+                            <p className='font-medium text-bold '>No Assignment Found</p>
+
+                        </div>
+
+                    </>
+                )
+
+            }
 
             {/* Modal */}
             < div >
@@ -227,8 +304,19 @@ const Assignment = () => {
                                                 <input type="date" name="deadline_date" id="deadline_date" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" required="" onChange={handleChange} />
                                             </div>
                                             <div class="col-span-2 sm:col-span-1">
+                                                {/* <label for="deadline_time" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Deadline Time</label>
+                                                <input type="time" name="deadline_time" id="deadline_time" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" required="" onChange={handleChange} /> */}
+
                                                 <label for="deadline_time" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Deadline Time</label>
-                                                <input type="time" name="deadline_time" id="deadline_time" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" required="" onChange={handleChange} />
+                                                <div class="relative">
+                                                    <div class="absolute inset-y-0 end-0 top-0 flex items-center pe-3.5 pointer-events-none">
+                                                        <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24">
+                                                            <path fill-rule="evenodd" d="M2 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10S2 17.523 2 12Zm11-4a1 1 0 1 0-2 0v4a1 1 0 0 0 .293.707l3 3a1 1 0 0 0 1.414-1.414L13 11.586V8Z" clip-rule="evenodd" />
+                                                        </svg>
+                                                    </div>
+                                                    <input type="time" id="deadline_time" name='deadline_time' class="bg-gray-50 border leading-none border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required onChange={handleChange} />
+                                                </div>
+
 
                                             </div>
                                         </div>
