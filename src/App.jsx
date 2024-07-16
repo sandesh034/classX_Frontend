@@ -7,6 +7,8 @@ import InstructorDashboard from './pages/InstructorDashboard'
 import VideoCalling from './components/VideoCalling'
 import AssignmentTable from './components/AssignmentTable'
 import Homepage from './pages/Homepage'
+import CreateCourse from './components/CreateCourse'
+import CustomDropdown from './components/Test'
 import 'react-toastify/dist/ReactToastify.css';
 
 const App = () => {
@@ -32,6 +34,7 @@ const App = () => {
         <Route path='/instructor-dashboard' element={<InstructorDashboard />} />
         <Route path='/video-calling' element={<VideoCalling />} />
         <Route path='/assignment-submission/:assignment_id' element={<AssignmentTable />} />
+        <Route path='/create-course' element={<CreateCourse />} />
       </Routes>
       <ToastContainer />
     </BrowserRouter>
