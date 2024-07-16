@@ -6,6 +6,7 @@ import Login from './components/Login'
 import InstructorDashboard from './pages/InstructorDashboard'
 import VideoCalling from './components/VideoCalling'
 import AssignmentTable from './components/AssignmentTable'
+import Homepage from './pages/Homepage'
 import 'react-toastify/dist/ReactToastify.css';
 
 const App = () => {
@@ -25,14 +26,12 @@ const App = () => {
         transition:Bounce />
 
       <Routes>
-        <Route path='/' element={<> <h1 className="text-3xl font-bold underline text-red-700">
-          Hello world!
-        </h1></>} />
+        <Route path='/' element={<Homepage />} />
         <Route path='/register' element={<Registration />} />
         <Route path='/login' element={<Login />} />
         <Route path='/instructor-dashboard' element={<InstructorDashboard />} />
         <Route path='/video-calling' element={<VideoCalling />} />
-        <Route path='/assignment-table' element={<AssignmentTable />} />
+        <Route path='/assignment-submission/:assignment_id' element={<AssignmentTable />} />
       </Routes>
       <ToastContainer />
     </BrowserRouter>

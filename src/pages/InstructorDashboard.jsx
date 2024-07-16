@@ -1,9 +1,10 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
+import { useNavigate, useLocation } from 'react-router-dom'
+import { toast } from 'react-toastify'
 import Discussion from '../components/Discussion'
 import Resources from '../components/Resources'
 import Calendar from '../components/Calender'
 import Assignment from '../components/Assignment'
-
 
 
 const InstructorDashboard = () => {
@@ -12,8 +13,16 @@ const InstructorDashboard = () => {
     const handleTabChane = (tab) => {
         setActiveTab(tab)
     }
+    const navigate = useNavigate()
+    const location = useLocation()
+    let loginSuccess = location.state?.loginSuccess || false;
 
-
+    useEffect(() => {
+        if (loginSuccess) {
+            toast.success('Welcome! Login successful');
+            loginSuccess = false;
+        }
+    }, [])
 
     return (
         <>
