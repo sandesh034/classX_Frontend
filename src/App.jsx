@@ -8,7 +8,6 @@ import VideoCalling from './components/VideoCalling'
 import AssignmentTable from './components/AssignmentTable'
 import Homepage from './pages/Homepage'
 import CreateCourse from './components/CreateCourse'
-import CustomDropdown from './components/Test'
 import 'react-toastify/dist/ReactToastify.css';
 
 const App = () => {
