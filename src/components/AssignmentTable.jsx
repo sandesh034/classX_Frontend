@@ -13,7 +13,7 @@ const AssignmentTable = () => {
 
     const fetchAssignmentSubmission = async () => {
         try {
-            const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/se/assignment/getSubmittion/dfa7a586-8ed7-4039-8265-dc14d469e7f5?assignment_id=${assignment_id}`, {
+            const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/course/assignment/getSubmittion/dfa7a586-8ed7-4039-8265-dc14d469e7f5?assignment_id=${assignment_id}`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',

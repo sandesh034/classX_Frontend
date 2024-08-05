@@ -6,7 +6,6 @@ import { Pagination, Autoplay } from 'swiper/modules';
 import { useEffect, useState } from 'react';
 
 const CourseSlider = () => {
-    localStorage.
     const [courses, setCourses] = useState()
     const fetchCourses = async () => {
         try {

@@ -35,9 +35,9 @@ const Login = () => {
             })
             const data = await response.json()
             if (response.ok) {
-                localStorage.setItem('accessToken', data.accessToken)
-                localStorage.setItem('refreshToken', data.refreshToken)
-                localStorage.setItem('user', JSON.stringify(data.user))
+                localStorage.setItem('accessToken', data.data.accessToken)
+                localStorage.setItem('refreshToken', data.data.refreshToken)
+                localStorage.setItem('user', JSON.stringify(data.data.user))
                 navigate('/instructor-dashboard', { state: { loginSuccess: true } })
             }
             else {
