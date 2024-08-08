@@ -23,7 +23,7 @@ This frontend project is developed as a part of the Database Management System (
 
    ```sh
    git clone https://github.com/sandesh034/classX_Frontend.git
-   cd classX_LMS_frontend
+   cd classX_frontend
    ```
 
 2. Install dependencies:
