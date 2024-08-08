@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import Fullcalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import timeGridPlugin from "@fullcalendar/timegrid";
@@ -8,6 +8,8 @@ import { toast } from "react-toastify";
 
 function Calendar() {
     const navigate = useNavigate();
+    const { course_id } = useParams()
+    // console.log(course_id)
     const [loading, setLoading] = useState(false);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [classes, setClasses] = useState([])
@@ -25,14 +27,14 @@ function Calendar() {
             ...scheduleClass,
             [e.target.name]: e.target.value
         })
-        console.log(scheduleClass)
+        // console.log(scheduleClass)
     }
 
     const handleSubmit = async (e) => {
         e.preventDefault()
         try {
             setLoading(true)
-            const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/course/routine/schedule/dfa7a586-8ed7-4039-8265-dc14d469e7f5`, {
+            const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/course/routine/schedule/${course_id}`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -49,7 +51,7 @@ function Calendar() {
             }
             else {
                 setLoading(false)
-                console.log(data.message)
+                // console.log(data.message)
                 toast.error(data.message)
             }
 
@@ -61,7 +63,7 @@ function Calendar() {
 
     const fetchClasses = async () => {
         try {
-            const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/course/routine/dfa7a586-8ed7-4039-8265-dc14d469e7f5`, {
+            const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/course/routine/${course_id}`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
@@ -74,7 +76,7 @@ function Calendar() {
                 // console.log(data.data)
             }
             else {
-                console.log(data.message)
+                // console.log(data.message)
                 toast.error(data.message)
             }
 
@@ -102,11 +104,13 @@ function Calendar() {
                     <h3 class="text-2xl font-semibold text-gray-900 dark:text-white">
                         Routine
                     </h3>
-
-                    <button class="text-white inline-flex items-center bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" onClick={() => { setIsModalOpen(true) }}>
-                        <svg class="me-1 -ms-1 w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z" clip-rule="evenodd"></path></svg>
-                        Add Class
-                    </button>
+                    {
+                        localStorage.getItem('user') && JSON.parse(localStorage.getItem('user')).user_type == 'instructor' &&
+                        <button class="text-white inline-flex items-center bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" onClick={() => { setIsModalOpen(true) }}>
+                            <svg class="me-1 -ms-1 w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z" clip-rule="evenodd"></path></svg>
+                            Add Class
+                        </button>
+                    }
 
                 </div>
             </div>

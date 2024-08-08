@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 import { toast } from 'react-toastify';
+import Navbar from './Navbar';
 
 const AssignmentTable = () => {
     const { assignment_id } = useParams();
@@ -85,7 +86,9 @@ const AssignmentTable = () => {
 
     return (
         <>
-            <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
+            <Navbar />
+            <div className="relative overflow-x-auto shadow-md ">
+
                 <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
                     <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                         <tr className='bg-blue-600 text-white'>
@@ -126,7 +129,7 @@ const AssignmentTable = () => {
                                         <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
                                             <td className="px-2 py-4">
                                                 <div className="flex items-center gap-4">
-                                                    <img className="w-10 h-10 rounded-full" src={submission.student_image} alt="" />
+                                                    <img className="w-10 h-10 rounded-full" src={submission.student_image || '/user.png'} alt="" />
                                                     <div className=" text-gray-900 dark:text-white" >
                                                         {submission.student_name}
                                                     </div>

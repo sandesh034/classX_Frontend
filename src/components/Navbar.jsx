@@ -1,26 +1,40 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import { HashLink } from 'react-router-hash-link';
 
 const Navbar = () => {
+    const navigate = useNavigate();
     const [isCollapsed, setIsCollapsed] = useState(true);
     const [isLogin, setIsLogin] = useState(false);
+    const [user, setUser] = useState({});
 
     const toggleCollapse = () => {
         setIsCollapsed(!isCollapsed);
     };
 
+    const checkLogin = () => {
+        if (localStorage.getItem('user')) {
+            setIsLogin(true);
+            setUser(JSON.parse(localStorage.getItem('user')));
+        }
+    }
+    useEffect(() => {
+        checkLogin();
+    }, []);
+
+
     return (
         <>
             <nav className="bg-transparent border-gray-200 dark:bg-gray-900 ">
                 <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
-                    <a href="" className="flex items-center space-x-3 rtl:space-x-reverse">
+                    <Link to='/' className="flex items-center space-x-3 rtl:space-x-reverse">
                         <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">classX</span>
-                    </a>
+                    </Link>
                     <div className="flex items-center md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
                         {
                             isLogin ? (
-                                <img className="w-8 h-8 rounded-full" src="/avatar.png" alt="user photo" />
+                                <img className="w-8 h-8 rounded-full" src={user.image || './user.png'} alt="user photo"
+                                    onClick={() => navigate('/lobby')} />
 
                             ) : (
                                 <Link to='/login'>
@@ -47,6 +61,13 @@ const Navbar = () => {
                                 <HashLink to="#contact" className="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-600 md:p-0 dark:text-white md:dark:hover:text-blue-600 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">Contact</HashLink>
                             </li>
 
+                            {
+                                user && user.user_type === 'admin' && (
+                                    <li>
+                                        <Link to='/create-course' className="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-600 md:p-0 dark:text-white md:dark:hover:text-blue-600 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">Create Course</Link>
+                                    </li>
+                                )
+                            }
                         </ul>
                     </div>
                 </div>

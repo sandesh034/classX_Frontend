@@ -1,9 +1,12 @@
 import React, { useState, useEffect } from 'react'
+import { useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
 
 
 const Resources = () => {
+    const { course_id } = useParams()
+    // console.log(course_id)
     const [activeTab, setActiveTab] = useState('document');
     const [Resources, setResources] = useState();
     const [loading, setLoading] = useState(false);
@@ -71,7 +74,7 @@ const Resources = () => {
 
     const fetchResources = async () => {
         try {
-            const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/course/resource/list/dfa7a586-8ed7-4039-8265-dc14d469e7f5`, {
+            const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/course/resource/list/${course_id}`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
@@ -85,7 +88,7 @@ const Resources = () => {
             }
             else {
                 toast.error(data.message)
-                console.log(data.message)
+                // console.log(data.message)
             }
 
         } catch (error) {
@@ -102,7 +105,7 @@ const Resources = () => {
         formData.append('attachment', uploadResource.attachment);
 
         try {
-            const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/course/resource/upload/dfa7a586-8ed7-4039-8265-dc14d469e7f5`, {
+            const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/course/resource/upload/${course_id}`, {
                 method: 'POST',
                 body: formData,
                 credentials: 'include'

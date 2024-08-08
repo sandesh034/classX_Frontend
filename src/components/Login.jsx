@@ -38,7 +38,7 @@ const Login = () => {
                 localStorage.setItem('accessToken', data.data.accessToken)
                 localStorage.setItem('refreshToken', data.data.refreshToken)
                 localStorage.setItem('user', JSON.stringify(data.data.user))
-                navigate('/instructor-dashboard', { state: { loginSuccess: true } })
+                navigate('/lobby', { state: { loginSuccess: true } })
             }
             else {
                 toast.error(data.message)

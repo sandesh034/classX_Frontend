@@ -3,7 +3,7 @@ import register_svg from '../assets/svg/register_svg.svg'
 import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
-import { data } from 'autoprefixer'
+
 
 const Registration = () => {
     const navigate = useNavigate()

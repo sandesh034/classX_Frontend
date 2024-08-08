@@ -1,8 +1,11 @@
 import { data } from 'autoprefixer';
 import React, { useState, useEffect } from 'react'
 import { toast } from 'react-toastify';
+import { useParams } from 'react-router-dom';
 
 const Discussion = () => {
+    const { course_id } = useParams()
+    // console.log(course_id)
     const [showFullContent, setShowFullContent] = useState(false);
     const [activeDiscussion, setActiveDiscussion] = useState(null);
     const [showReply, setShowReply] = useState(false);
@@ -30,7 +33,7 @@ const Discussion = () => {
     const postDiscussion = async (e) => {
         try {
             e.preventDefault();
-            const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/course/forum/post/dfa7a586-8ed7-4039-8265-dc14d469e7f5`, {
+            const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/course/forum/post/${course_id}`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -49,7 +52,7 @@ const Discussion = () => {
                     title: null,
                     description: null,
                 })
-                console.log('posted successfully');
+                // console.log('posted successfully');
             }
             else {
                 toast.error(data.message || 'An error occurred');
@@ -59,7 +62,6 @@ const Discussion = () => {
         } catch (error) {
             toast.error(error.message);
             console.error('Fetch error:', error);
-
         }
     }
 
@@ -94,7 +96,7 @@ const Discussion = () => {
     const handlePostReply = async (e) => {
         try {
             e.preventDefault();
-            const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/course/forum/reply/dfa7a586-8ed7-4039-8265-dc14d469e7f5?forum_id=${activeDiscussion}`, {
+            const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/course/forum/reply/${course_id}?forum_id=${activeDiscussion}`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -128,7 +130,7 @@ const Discussion = () => {
     const fetchDiscussions = async () => {
         // console.log('fetching discussions');
         try {
-            const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/course/forum/list/dfa7a586-8ed7-4039-8265-dc14d469e7f5`, {
+            const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/course/forum/list/${course_id}`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
@@ -286,8 +288,8 @@ const Discussion = () => {
                 </div>
             </div>
 
-            <div className='flex items-center justify-center'>
 
+            <div className={discussions.length < itemsPerPage ? 'hidden' : `flex items-center justify-center`}>
                 <nav aria-label="Page navigation">
                     <ul className="inline-flex -space-x-px text-base h-10">
                         <li>

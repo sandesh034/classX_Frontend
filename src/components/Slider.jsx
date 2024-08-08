@@ -4,6 +4,7 @@ import 'swiper/css/pagination';
 import 'swiper/css/autoplay';
 import { Pagination, Autoplay } from 'swiper/modules';
 import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 
 const CourseSlider = () => {
     const [courses, setCourses] = useState()
@@ -61,7 +62,7 @@ const CourseSlider = () => {
                 courses && courses.map((course) => {
                     return (
                         <SwiperSlide>
-                            <a href='#'>
+                            <Link to={`course-detail/${course.course_id}`}>
                                 <div class="max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 ">
                                     <div >
                                         <img class="rounded-t-lg" src="./course_img.png" alt="" />
@@ -72,11 +73,11 @@ const CourseSlider = () => {
                                                 {course.name}
                                             </h5>
                                         </div>
-                                        <p class="min-h-[80px] w-full mb-3 font-normal text-gray-700 dark:text-gray-400">{course.description}</p>
+                                        <p class="line-clamp-2 min-h-[80px] w-full mb-3 font-normal text-gray-700 dark:text-gray-400">{course.description}</p>
 
                                     </div>
                                 </div>
-                            </a>
+                            </Link>
 
                         </SwiperSlide>
 
