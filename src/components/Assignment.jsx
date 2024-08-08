@@ -298,7 +298,7 @@ const Assignment = () => {
                                             localStorage.getItem('user') && JSON.parse(localStorage.getItem('user')).user_type == 'instructor' ?
                                                 (
                                                     <>
-                                                        <button type="button" class={`text-center text-blue-700 hover:text-blue-800 font-medium rounded-lg text-md  py-2.5  inline-flex items-center dark:text-blue-600 dark:hover:text-blue-70 ${assignment.total_submissions < 1 ? 'cursor-not-allowed' : ''}`} onClick={() => navigate(`/assignment-submission/${assignment.assignment_id}`)}>
+                                                        <button type="button" class={`text-center text-blue-700 hover:text-blue-800 font-medium rounded-lg text-md  py-2.5  inline-flex items-center dark:text-blue-600 dark:hover:text-blue-70 ${assignment.total_submissions < 1 ? 'cursor-not-allowed' : ''}`} onClick={() => navigate(`/assignment-submission/${course_id}/${assignment.assignment_id}`)}>
                                                             View Details
                                                             <svg class="rtl:rotate-180 w-4 h-4 ms-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
                                                                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9" />

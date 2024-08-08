@@ -3,8 +3,9 @@ import { useParams } from 'react-router-dom'
 import { toast } from 'react-toastify';
 import Navbar from './Navbar';
 
+
 const AssignmentTable = () => {
-    const { assignment_id } = useParams();
+    const { assignment_id, course_id } = useParams();
     // console.log(assignment_id);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [grading, setGrading] = useState({});
@@ -14,7 +15,7 @@ const AssignmentTable = () => {
 
     const fetchAssignmentSubmission = async () => {
         try {
-            const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/course/assignment/getSubmittion/dfa7a586-8ed7-4039-8265-dc14d469e7f5?assignment_id=${assignment_id}`, {
+            const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/course/assignment/getSubmittion/${course_id}?assignment_id=${assignment_id}`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
@@ -47,7 +48,7 @@ const AssignmentTable = () => {
         e.preventDefault();
         try {
             setLoading(true);
-            const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/course/assignment/grade/dfa7a586-8ed7-4039-8265-dc14d469e7f5?assignment_submit_id=${selectedAssignmentSubmissionId}`, {
+            const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/course/assignment/grade/${course_id}?assignment_submit_id=${selectedAssignmentSubmissionId}`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
